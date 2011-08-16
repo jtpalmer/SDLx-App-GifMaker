@@ -1,0 +1,13 @@
+severity  = 3
+color     = 1
+only      = 0
+force     = 0
+verbose   = [%p] %m at %f line %l, column %c. (Severity: %s)\n\n
+top       = 100
+theme     = (core && !pbp) || bugs || security || readability || maintenance
+include   = BuiltinFunctions TestingAndDebugging
+
+[BuiltinFunctions::ProhibitStringyEval]
+allow_includes = 1
+
+[-Bangs::ProhibitBitwiseOperators]
