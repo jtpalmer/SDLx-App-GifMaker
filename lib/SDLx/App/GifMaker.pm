@@ -85,8 +85,14 @@ sub _write_gif {
     my $count = scalar @{ $_images{ refaddr $self} };
     print "Image count $count\n";
 
-    my @images
-        = map { print '.'; Imager->new( file => $_ ) } @{ $_images{ refaddr $self} };
+    $|++;
+
+    my @images;
+    for ( @{ $_images{ refaddr $self} } ) {
+        print '.';
+        push @images, Imager->new( file => $_ );
+    }
+    print "\n";
 
     Imager->write_multi(
         {   file        => $_output_file{ refaddr $self},
