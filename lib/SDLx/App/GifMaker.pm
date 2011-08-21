@@ -4,7 +4,7 @@ use warnings;
 
 # ABSTRACT: Create animated GIFs using SDL
 
-use Carp qw(confess);
+use Carp;
 use Imager;
 use Scalar::Util qw(refaddr);
 use File::Temp qw( tempfile tempdir );
@@ -26,8 +26,8 @@ sub new {
 
     my $delay = int $self->min_t * 100;
     if ( $delay != $self->min_t * 100 ) {
-        warn "Rounding delay\n";
-        warn "Use a multiple of 0.01 for min_t to prevent this warning\n";
+        carp "Rounding delay\n";
+        carp "Use a multiple of 0.01 for min_t to prevent this warning\n";
     }
 
     my $id = refaddr $self;
