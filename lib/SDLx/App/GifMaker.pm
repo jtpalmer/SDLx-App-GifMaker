@@ -79,9 +79,6 @@ sub _write_gif {
 
     my $id = refaddr $self;
 
-    my $delay = $_delay{$id};
-    print "Delay ${delay}/100s\n";
-
     my $count = scalar @{ $_images{$id} };
     print "Image count $count\n";
 
@@ -95,6 +92,9 @@ sub _write_gif {
     print "\n";
 
     print "Writing file: ", $_output_file{$id}, "\n";
+
+    my $delay = $_delay{$id};
+    print "Using delay: ${delay}/100s\n";
 
     Imager->write_multi(
         {   file        => $_output_file{$id},
