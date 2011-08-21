@@ -77,26 +77,28 @@ sub _show {
 sub _write_gif {
     my $self = shift;
 
-    print "Writing file: ", $_output_file{ refaddr $self}, "\n";
+    my $id = refaddr $self;
 
-    my $delay = $_delay{ refaddr $self};
-    print "Delay $delay\n";
+    my $delay = $_delay{$id};
+    print "Delay ${delay}/100s\n";
 
-    my $count = scalar @{ $_images{ refaddr $self} };
+    my $count = scalar @{ $_images{$id} };
     print "Image count $count\n";
 
     $|++;
 
     my @images;
-    for ( @{ $_images{ refaddr $self} } ) {
+    for ( @{ $_images{$id} } ) {
         print '.';
         push @images, Imager->new( file => $_ );
     }
     print "\n";
 
+    print "Writing file: ", $_output_file{$id}, "\n";
+
     Imager->write_multi(
-        {   file        => $_output_file{ refaddr $self},
-            gif_delay   => int $_delay{ refaddr $self},
+        {   file        => $_output_file{$id},
+            gif_delay   => int $_delay{$id},
             gif_loop    => 0,
             type        => 'gif',
             make_colors => 'mediancut',
