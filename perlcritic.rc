@@ -1,13 +1,45 @@
-severity  = 3
-color     = 1
-only      = 0
-force     = 0
-verbose   = [%p] %m at %f line %l, column %c. (Severity: %s)\n\n
-top       = 100
-theme     = (core && !pbp) || bugs || security || readability || maintenance
-include   = BuiltinFunctions TestingAndDebugging
+severity = 3
+color    = 1
+only     = 0
+force    = 0
+verbose  = [%p] %m at %f line %l, column %c. (Severity: %s)\n\n
+theme    = (core && !pbp) || bugs || compatibility || cosmetic || documentation || maintenance || portability || readability || security || tics || unicode
 
 [BuiltinFunctions::ProhibitStringyEval]
 allow_includes = 1
 
-[-Bangs::ProhibitBitwiseOperators]
+[CodeLayout::RequireTidyCode]
+severity = 4
+
+[CodeLayout::RequireUseUTF8]
+severity = 1
+
+[Documentation::RequirePodSections]
+lib_sections = NAME | VERSION | SYNOPSIS | DESCRIPTION | BUGS AND LIMITATIONS | AUTHOR | LICENSE AND COPYRIGHT
+script_sections = NAME | VERSION | USAGE | DESCRIPTION | REQUIRED ARGUMENTS | OPTIONS | EXIT STATUS | BUGS AND LIMITATIONS | AUTHOR | LICENSE AND COPYRIGHT
+
+[Documentation::RequirePODUseEncodingUTF8]
+severity = 1
+
+[-Documentation::PodSpelling]
+
+[-Editor::RequireEmacsFileVariables]
+
+[-ErrorHandling::RequireUseOfExceptions]
+
+[-InputOutput::RequireBriefOpen]
+
+[-Modules::RequireVersionVar]
+
+[-RegularExpressions::RequireExtendedFormatting]
+
+[-Subroutines::ProhibitBuiltinHomonyms]
+
+[-Subroutines::ProhibitUnusedPrivateSubroutines]
+
+[-Subroutines::RequireArgUnpacking]
+
+[-Subroutines::RequireFinalReturn]
+
+[-ValuesAndExpressions::ProhibitImplicitNewlines]
+
