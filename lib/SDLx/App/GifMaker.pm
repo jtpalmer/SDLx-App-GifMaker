@@ -2,6 +2,8 @@ package SDLx::App::GifMaker;
 use strict;
 use warnings;
 
+# ABSTRACT: Create animated GIFs using SDL
+
 use Carp qw(confess);
 use Imager;
 use Scalar::Util qw(refaddr);
