@@ -24,10 +24,16 @@ sub new {
 
     my $self = $class->SUPER::new(%options);
 
+    my $delay = int $self->dt * 100;
+    if ( $delay != $self->dt * 100 ) {
+        warn "Rounding delay\n";
+        warn "Use a multiple of 0.01 for dt to prevent this warning\n";
+    }
+
     my $id = refaddr $self;
     $_output_file{$id} = $options{output_file};
     $_images{$id}      = [];
-    $_delay{$id}       = $self->dt * 100;
+    $_delay{$id}       = $delay;
     $_tempdir{$id}     = tempdir( CLEANUP => 1 );
 
     return bless $self, $class;
