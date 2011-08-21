@@ -22,8 +22,6 @@ my %_tempdir;
 sub new {
     my ( $class, %options ) = @_;
 
-    #unshift @{ $options{event_handlers} },
-
     my $self = $class->SUPER::new(%options);
 
     my $id = refaddr $self;
@@ -51,12 +49,6 @@ sub stop {
     $self->SUPER::stop(@_);
 
     $self->_write_gif();
-}
-
-sub _event {
-    my $self = shift;
-
-    $self->SUPER::_event(@_);
 }
 
 sub _show {
