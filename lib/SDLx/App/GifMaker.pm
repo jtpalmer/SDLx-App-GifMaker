@@ -24,10 +24,10 @@ sub new {
 
     my $self = $class->SUPER::new(%options);
 
-    my $delay = int $self->dt * 100;
-    if ( $delay != $self->dt * 100 ) {
+    my $delay = int $self->min_t * 100;
+    if ( $delay != $self->min_t * 100 ) {
         warn "Rounding delay\n";
-        warn "Use a multiple of 0.01 for dt to prevent this warning\n";
+        warn "Use a multiple of 0.01 for min_t to prevent this warning\n";
     }
 
     my $id = refaddr $self;

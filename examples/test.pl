@@ -7,7 +7,8 @@ my $app = SDLx::App::GifMaker->new(
     output_file => '/tmp/test.gif',
     width       => 640,
     height      => 480,
-    dt          => 0.06,
+    min_t       => 0.06,
+    delay       => 0.05,
     eoq         => 1,
 );
 
