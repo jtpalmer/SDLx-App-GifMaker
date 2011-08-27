@@ -6,6 +6,7 @@ use warnings;
 
 use Carp;
 use Imager;
+use Image::Magick;
 use Scalar::Util qw(refaddr);
 use File::Temp qw( tempfile tempdir );
 use File::Spec;
@@ -89,18 +90,20 @@ sub _write_gif {
 
     if ( system(qw( which ffmpeg )) == 0 ) {
 
-        my $delay = $_delay{$id};
-        my $fps   = 100 / $delay;
-
-        print "Using FPS: $fps\n";
-
         my $command
             = qq(ffmpeg -y -i $_tempdir{$id}/$FILE_FORMAT -loop_output 0 -pix_fmt rgb24 $_output_file{$id});
 
         print $command, "\n";
 
-        qx($command)
-            or croak $!;
+        qx($command 1>&2);
+
+        my $delay = $_delay{$id};
+        print "Using Delay: $delay\n";
+
+        my $image = Image::Magick->new();
+        $image->Read( $_output_file{$id} );
+        $image->Set( delay => $delay );
+        $image->Write( $_output_file{$id} );
     }
     else {
         $|++;
