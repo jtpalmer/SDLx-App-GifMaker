@@ -15,9 +15,9 @@ use SDLx::App;
 
 use parent qw(SDLx::App);
 
-my $FILE_FORMAT = 'SDLx-App-GifMaker-%09d.bmp',
+my $FILE_FORMAT = 'SDLx-App-GifMaker-%09d.bmp';
 
-    my %_output_file;
+my %_output_file;
 my %_images;
 my %_image_count;
 my %_delay;
@@ -97,14 +97,10 @@ sub _write_gif {
         my $command
             = qq(ffmpeg -y -i $_tempdir{$id}/$FILE_FORMAT -loop_output 0 -pix_fmt rgb24 $_output_file{$id});
 
-#= qq(ffmpeg -y -r $fps -i $_tempdir{$id}/$FILE_FORMAT -loop_output 0 -pix_fmt rgb24 $_output_file{$id});
-#= qq(ffmpeg -y -i $_tempdir{$id}/$FILE_FORMAT -r $fps -loop_output 0 -pix_fmt rgb24 $_output_file{$id});
-
         print $command, "\n";
 
         qx($command)
             or croak $!;
-
     }
     else {
         $|++;
