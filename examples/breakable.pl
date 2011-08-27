@@ -239,13 +239,8 @@ my $ppm = 30;
 # meters per pixel
 my $mpp = 1.0 / $ppm;
 
-# frames per second
-#my $timestep = 5.0 / 100;
-#my $fps      = 1.0 / $timestep;
-my $fps      = 10;
-my $timestep = 1.0 / $fps;
-
-print "FPS: $fps\n";
+# second per frame
+my $timestep = 3.0 / 100;
 
 # velocity iterations
 my $vIters = 10;
@@ -281,11 +276,8 @@ $app->add_event_handler(
 
 $app->add_show_handler(
     sub {
-        # GIF animation FPS isn't high enough, so double step
-        for ( 0 .. 1) {
-            $_->Step() foreach @breakables;
-            $world->Step( $timestep / 2, $vIters, $pIters );
-        }
+        $_->Step() foreach @breakables;
+        $world->Step( $timestep, $vIters, $pIters );
 
         $world->ClearForces();
 
