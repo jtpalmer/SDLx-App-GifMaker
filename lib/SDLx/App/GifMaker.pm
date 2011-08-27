@@ -5,7 +5,7 @@ use warnings;
 # ABSTRACT: Create animated GIFs using SDL
 
 use Carp;
-use Imager;
+use Image::Magick;
 use Scalar::Util qw(refaddr);
 use File::Temp qw( tempfile tempdir );
 
@@ -24,7 +24,7 @@ sub new {
 
     my $self = $class->SUPER::new(%options);
 
-    my $delay = int $self->min_t * 100;
+    my $delay = int( $self->min_t * 100 );
     if ( $delay != $self->min_t * 100 ) {
         carp "Rounding delay\n";
         carp "Use a multiple of 0.01 for min_t to prevent this warning\n";
@@ -84,27 +84,22 @@ sub _write_gif {
 
     $|++;
 
-    my @images;
-    for ( @{ $_images{$id} } ) {
-        print '.';
-        push @images, Imager->new( file => $_ );
-    }
-    print "\n";
+    my $image = Image::Magick->new();
+
+    print "Reading files\n";
+
+    $image->Read( @{ $_images{$id} } );
 
     print "Writing file: ", $_output_file{$id}, "\n";
 
     my $delay = $_delay{$id};
     print "Using delay: ${delay}/100s\n";
 
-    Imager->write_multi(
-        {   file        => $_output_file{$id},
-            gif_delay   => int $_delay{$id},
-            gif_loop    => 0,
-            type        => 'gif',
-            make_colors => 'mediancut',
-        },
-        @images
-    ) or print "Cannot write: ", Imager->errstr;
+    $image->Write(
+        filename => $_output_file{$id},
+        delay    => $_delay{$id},
+        loop     => 0,
+    );
 }
 
 1;
