@@ -240,8 +240,12 @@ my $ppm = 30;
 my $mpp = 1.0 / $ppm;
 
 # frames per second
-my $fps      = 50.0;
+#my $timestep = 5.0 / 100;
+#my $fps      = 1.0 / $timestep;
+my $fps      = 10;
 my $timestep = 1.0 / $fps;
+
+print "FPS: $fps\n";
 
 # velocity iterations
 my $vIters = 10;
@@ -260,8 +264,8 @@ my $app = SDLx::App::GifMaker->new(
     output_file => '/tmp/breakable.gif',
     width  => $width,
     height => $height,
-    dt     => $timestep,
-    min_t  => $timestep / 2,
+    min_t  => $timestep,
+    delay  => 0,
     flags  => SDL_DOUBLEBUF | SDL_HWSURFACE,
     eoq    => 1,
 );
@@ -277,8 +281,12 @@ $app->add_event_handler(
 
 $app->add_show_handler(
     sub {
-        $_->Step() foreach @breakables;
-        $world->Step( $timestep, $vIters, $pIters );
+        # GIF animation FPS isn't high enough, so double step
+        for ( 0 .. 1) {
+            $_->Step() foreach @breakables;
+            $world->Step( $timestep / 2, $vIters, $pIters );
+        }
+
         $world->ClearForces();
 
         $app->draw_rect( undef, 0x000000FF );
