@@ -262,12 +262,12 @@ my @breakables;
 
 my $app = SDLx::App::GifMaker->new(
     output_file => '/tmp/breakable.gif',
-    width  => $width,
-    height => $height,
-    min_t  => $timestep,
-    delay  => 0,
-    flags  => SDL_DOUBLEBUF | SDL_HWSURFACE,
-    eoq    => 1,
+    width       => $width,
+    height      => $height,
+    min_t       => $timestep,
+    delay       => 0,
+    flags       => SDL_DOUBLEBUF | SDL_HWSURFACE,
+    eoq         => 1,
 );
 
 $app->add_event_handler(
